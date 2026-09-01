@@ -1,0 +1,27 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "trent",
+  "owner": {
+    "name": "Trent AI",
+    "url": "https://trent.ai"
+  },
+  "metadata": {
+    "description": "Official marketplace for the Trent security advisor plugin.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "trent",
+      "source": ".",
+      "description": "Trent, an AI security advisor. Review code, plans and configs for security problems, run threat models over a repo or website, and track remediation — without leaving the editor.",
+      "category": "security",
+      "keywords": [
+        "security",
+        "appsec",
+        "threat-model",
+        "code-review",
+        "vulnerability"
+      ]
+    }
+  ]
+}
