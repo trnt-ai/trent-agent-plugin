@@ -1,0 +1,20 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "trent",
+  "version": "0.1.0",
+  "description": "Trent, an AI security engineer. Review code, plans and configs for security problems, run threat models over a repo or website, and track remediation without leaving the editor.",
+  "author": {
+    "name": "Trent AI",
+    "url": "https://trent.ai"
+  },
+  "homepage": "https://trent.ai",
+  "repository": "https://github.com/trnt-ai/trent-agent-plugin",
+  "license": "MIT",
+  "keywords": [
+    "security",
+    "appsec",
+    "threat-model",
+    "code-review",
+    "vulnerability"
+  ]
+}

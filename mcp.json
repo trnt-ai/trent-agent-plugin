@@ -1,0 +1,13 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "trent-us": {
+      "type": "streamable-http",
+      "url": "https://mcp.trent.ai/mcp"
+    },
+    "trent-eu": {
+      "type": "streamable-http",
+      "url": "https://mcp.eu.trent.ai/mcp"
+    }
+  }
+}
