@@ -32,6 +32,20 @@ The plugin declares a remote MCP server and no credentials. Authentication
 happens in the browser the first time a tool runs; there is no API key to paste
 and none is shipped here.
 
+## Using it
+
+Ask your coding agent in plain words; the plugin's skills tell it which Trent
+tool to use:
+
+- **Review one piece of work** (a diff, a plan, a config): `trent-security-advisor`.
+- **Scan a repository or website and read what Trent found**: `trent-threats`,
+  or `trent-repo` for the repository you are in.
+- **Fix what Trent found**: run `/trent:trent-loop`, or `/trent:trent-loop 3` to
+  fix at most three. It works on a new branch, checks each fix with your own
+  tests and with Trent's security advisor, and opens one pull request for you to
+  review. After you merge it, run it again: Trent scans the merged code, reports
+  which fixes it now counts as done, and carries on with the rest.
+
 ## Verifying where a release came from
 
 Each release is one commit, and its message carries the revision it was built
@@ -46,6 +60,10 @@ identifier, not a link; there is nowhere to follow it to. What it gives you is
 an exact name for the build you are running: quote it to support and they can
 say which release you have. If a copy of this plugin does not carry a message in
 that form, it was not published by us.
+
+Each release's pull request also runs a check, `provenance`, that the commit
+has that shape: one commit on `main`, that subject, plain files, and a changed
+version when the content changed. It reads the commit and holds no credential.
 
 The plugin manifest names `https://github.com/trnt-ai/trent-agent-plugin`, this repository, as
 its `repository`, and `trent.ai` as its `homepage`. A plugin claiming to be Trent
