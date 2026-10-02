@@ -1,0 +1,78 @@
+# Ships to trnt-ai/trent-agent-plugin through the publish allow-list and runs
+# there on every publish pull request. Here it is inert: GitHub reads workflows
+# from the repository root only.
+#
+# It asks what a reviewer's `verify` asks before it compares trees: that the
+# commit has the shape of a publish. The tree comparison needs the private
+# source, so that stays with the reviewer. It holds no credential.
+name: provenance
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash -euo pipefail {0}
+
+env:
+  SUBJECT_PATTERN: '^Published from source revision [0-9a-f]{40}$'
+  MANIFEST: .claude-plugin/plugin.json
+
+jobs:
+  publish-commit-shape:
+    name: publish commit shape
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the pull request head with history
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: One commit, on the current main
+        run: |
+          base="$(git rev-parse origin/main)"
+          parents="$(git rev-list --parents -n 1 HEAD | cut -s -d ' ' -f 2-)"
+          if [ "$parents" != "$base" ]; then
+            echo "::error::the head commit sits on '${parents:-nothing}' and main is at ${base}. A publish is one commit on the current main: rebase the branch and verify again."
+            exit 1
+          fi
+
+      - name: The subject names a source revision and nothing else
+        run: |
+          subject="$(git log -1 --format=%s HEAD)"
+          if ! printf '%s\n' "$subject" | grep -Eq -e "$SUBJECT_PATTERN"; then
+            echo "::error::the commit subject is '${subject}'. A publish commit reads 'Published from source revision <sha>': one 40-character revision, nothing before it and nothing after it."
+            exit 1
+          fi
+
+      - name: Plain files only
+        run: |
+          others="$(git ls-tree -r HEAD | awk '$1 != "100644"')"
+          if [ -n "$others" ]; then
+            echo "::error::a release ships plain, non-executable files only; the commit carries:"
+            printf '%s\n' "$others"
+            exit 1
+          fi
+
+      - name: Changed content carries a changed version
+        run: |
+          if git diff --quiet origin/main HEAD; then
+            echo "the tree is the same as main; nothing to version"
+          elif ! git cat-file -e "origin/main:${MANIFEST}" 2>/dev/null; then
+            echo "main carries no manifest yet; the first release has no version to bump against"
+          else
+            version() { git show "$1:${MANIFEST}" | python3 -I -c 'import json, sys; print(json.load(sys.stdin)["version"])'; }
+            live="$(version origin/main)"
+            head="$(version HEAD)"
+            if [ "$live" = "$head" ]; then
+              echo "::error::the content changed but the plugin version is still ${live}. Installed customers only receive a release when 'version' in ${MANIFEST} changes."
+              exit 1
+            fi
+            echo "version ${live} -> ${head}"
+          fi

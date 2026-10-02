@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
   "name": "trent",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Trent, an AI security engineer. Review code, plans and configs for security problems, run threat models over a repo or website, and track remediation without leaving the editor.",
   "author": {
     "name": "Trent AI",

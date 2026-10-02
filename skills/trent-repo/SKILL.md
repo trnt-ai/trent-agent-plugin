@@ -43,13 +43,14 @@ Use the matched project and route on what the user asked. The common cases:
 
 - threats or vulnerabilities → `get_security_posture`
 - controls, remediation, "what should I fix?" → `review_plan`
+- "fix what Trent found" → the `trent-loop` skill
 - scan progress or status → `get_scan_status`
 - start a scan → `trigger_analysis`
 
 `trent-threats` has the full intent-to-tool map, and the rules for presenting
-each kind of result. Approving a plan or a paused scan phase is the user's
-call: present, ask, end your turn, and call the approval tool only once they
-have replied.
+each kind of result. Approving a paused scan phase is the user's call:
+present, ask, end your turn, and call `approve_scan_phase` only once they have
+replied.
 
 ## Step 4: Lead with what you resolved
 

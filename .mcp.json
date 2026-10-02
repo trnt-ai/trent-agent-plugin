@@ -2,11 +2,17 @@
   "mcpServers": {
     "trent-us": {
       "type": "http",
-      "url": "https://mcp.trent.ai/mcp"
+      "url": "https://mcp.trent.ai/mcp",
+      "headers": {
+        "x-trent-plugin-version": "0.3.0"
+      }
     },
     "trent-eu": {
       "type": "http",
-      "url": "https://mcp.eu.trent.ai/mcp"
+      "url": "https://mcp.eu.trent.ai/mcp",
+      "headers": {
+        "x-trent-plugin-version": "0.3.0"
+      }
     }
   }
 }
