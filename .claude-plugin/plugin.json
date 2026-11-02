@@ -1,13 +1,14 @@
 {
   "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
   "name": "trent",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Trent, an AI security engineer. Review code, plans and configs for security problems, run threat models over a repo or website, and track remediation without leaving the editor.",
   "author": {
     "name": "Trent AI",
     "url": "https://trent.ai"
   },
   "homepage": "https://trent.ai",
+  "privacyPolicyUrl": "https://trent.ai/privacy-policy/",
   "repository": "https://github.com/trnt-ai/trent-agent-plugin",
   "license": "MIT",
   "keywords": [
