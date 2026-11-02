@@ -1,5 +1,31 @@
 # Changelog
 
+## 0.4.0
+
+### Added
+
+- `get_artifact(threats)` lists every threat as it stands now, with the edits you
+  made applied: id, title, severity, likelihood, status, the controls that
+  mitigate it, whether you changed it, and your reason. It can narrow by
+  severity and status.
+- `get_item` reads one threat, control or security requirement by its id.
+- `list_projects` pages: when the reply has a `next_cursor`, pass it back as
+  `cursor` to read the rest.
+- `get_security_posture` reports the findings you uploaded from other scanners:
+  what Trent confirmed, dismissed and left unvalidated, the two caps that bound
+  a scan, and every finding Trent did not accept with its reason.
+- A failed call now sets the protocol's error flag, and a rate limit tells you
+  how long to wait.
+
+### Changed
+
+- `trent-threats` and `trent-repo` send you to `threats` or `get_item` when you
+  ask what a threat's severity is now. `threat_report` is the report as written
+  at scan time.
+- Replies to a bad scan, revision, moment or cursor now say which one was wrong.
+- Every reply's `message` is one sentence. The rest moves to `next_steps`, and
+  `update_project` and `update_tasks` list each part's result in `outcomes`.
+
 ## 0.3.0
 
 ### Added

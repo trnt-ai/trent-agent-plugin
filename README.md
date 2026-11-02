@@ -32,6 +32,32 @@ The plugin declares a remote MCP server and no credentials. Authentication
 happens in the browser the first time a tool runs; there is no API key to paste
 and none is shipped here.
 
+## What the plugin sends, and where
+
+The plugin holds no code of its own: four skills and the addresses of Trent's
+two servers. Everything it sends goes through your coding agent, as Trent tool
+calls, to the server for your account's region: `https://mcp.trent.ai/mcp`
+(US) or `https://mcp.eu.trent.ai/mcp` (EU).
+
+- **Repository scans.** Trent reads a repository through the Trent GitHub App
+  you install on it. The plugin does not upload your repository; it sends the
+  repository's owner and name.
+- **Reviews.** `security_advisor` sends the content your agent passes it for
+  that review: code, a diff, a plan or a config. `/trent:trent-loop` sends the
+  diff of each fix it makes.
+- **Documents.** A design document or findings file you choose to attach is
+  uploaded straight to Trent's storage on Amazon S3, through a signed URL that
+  `prepare_file_upload` returns and that expires.
+- **What you type.** Feedback, edits to findings and project settings go as tool
+  arguments.
+
+The plugin also sends its version in the `x-trent-plugin-version` header. It
+reads no credentials from your machine.
+
+Trent handles this data under its privacy policy,
+https://trent.ai/privacy-policy/. Security documentation is in the Trent Trust
+Center, https://trust.trent.ai/.
+
 ## Using it
 
 Ask your coding agent in plain words; the plugin's skills tell it which Trent

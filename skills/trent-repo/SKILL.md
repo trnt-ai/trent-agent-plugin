@@ -41,7 +41,8 @@ name the user typed ("payment-service") before you act on it.
 
 Use the matched project and route on what the user asked. The common cases:
 
-- threats or vulnerabilities → `get_security_posture`
+- threats or vulnerabilities → `get_security_posture`; every threat as it stands
+  now, or one by id → `get_artifact(threats)` or `get_item`
 - controls, remediation, "what should I fix?" → `review_plan`
 - "fix what Trent found" → the `trent-loop` skill
 - scan progress or status → `get_scan_status`
